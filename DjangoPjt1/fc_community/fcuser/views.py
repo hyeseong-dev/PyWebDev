@@ -20,7 +20,7 @@ def register(request):
             res_data['error'] = '모든 값을 입력하세요'
         if password != re_password:
             res_data['error'] = '비밀번호가 달라요.'
-        else:
+        else: 
             fcuser = Fcuser(
             username  = username, 
             useremail  = useremail, 
