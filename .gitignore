@@ -1,0 +1,3 @@
+venv/
+*.pyc
+DjangoPjt1/fc_community/fc_community/__pycache__/
