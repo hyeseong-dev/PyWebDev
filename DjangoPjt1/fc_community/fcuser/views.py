@@ -1,8 +1,38 @@
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth.hashers import make_password
+from django.shortcuts import render,redirect
+from django.contrib.auth.hashers import make_password, check_password
 from .models import Fcuser
-# Create your views here.
+
+def home(request):
+    user_id = request.session.get('user')
+
+    if user_id : 
+        fcuser = Fcuser.objects.get(pk=user_id)
+        return HttpResponse(fcuser.username)
+
+    return HttpResponse('Home~~~~!')
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+
+    elif request.method == 'POST':
+        useremail = request.POST.get('useremail', None)
+        password = request.POST.get('password', None)
+         
+        res_data = {}
+
+        if not (useremail and password): 
+            res_data['error'] = '모든 값을 입력하세요'
+        else:
+            fcuser = Fcuser.objects.get(useremail=useremail)
+            if check_password(password, fcuser.password):
+               request.session['user'] = fcuser.id
+               return redirect('/')
+            else:
+                res_data['error'] = '비밀번호가 틀렸어요'
+        return render(request, 'login.html', res_data)
+
 def register(request):
        
     if request.method == 'GET':
@@ -19,8 +49,8 @@ def register(request):
         if not (username and useremail and password and re_password): 
             res_data['error'] = '모든 값을 입력하세요'
         if password != re_password:
-            res_data['error'] = '비밀번호가 달라요.'
-        else: 
+            res_data['error'] = '비밀번호가 달라요'
+        else:
             fcuser = Fcuser(
             username  = username, 
             useremail  = useremail, 
