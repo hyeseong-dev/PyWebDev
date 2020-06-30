@@ -1,3 +1,8 @@
+# Directories
 venv/
-*.pyc
 /__pycache__/
+Users\이혜성\Desktop\pywebdev\DjangoPjt1\fc_community
+
+# package File 
+*.sqlite3
+*.pyc

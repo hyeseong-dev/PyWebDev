@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Fcuser
+from .forms import LoginForm
 
 def home(request):
     user_id = request.session.get('user')
@@ -18,26 +19,29 @@ def logout(request):
     return redirect('/')
 
 
+# def login(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         print(form.is_valid())
+#         if form.is_valid():
+#             print('--------------------------------------------------------------')
+#             print(form)
+#             return redirect('/')
+#     else:
+#         form = LoginForm
+#     return render(request, 'login.html', {'form': form})
 def login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            # request.session['user'] = form.user_id
+            return redirect('/')
+    else:
+        form = LoginForm()
 
-    elif request.method == 'POST':
-        useremail = request.POST.get('useremail', None)
-        password = request.POST.get('password', None)
-         
-        res_data = {}
+    return render(request, 'login.html', {'form': form})
 
-        if not (useremail and password): 
-            res_data['error'] = '모든 값을 입력하세요'
-        else:
-            fcuser = Fcuser.objects.get(useremail=useremail)
-            if check_password(password, fcuser.password):
-               request.session['user'] = fcuser.id
-               return redirect('/')
-            else:
-                res_data['error'] = '비밀번호가 틀렸어요'
-        return render(request, 'login.html', res_data)
 
 def register(request):
        
