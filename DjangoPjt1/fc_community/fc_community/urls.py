@@ -20,5 +20,7 @@ from fcuser.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('fcuser/', include('fcuser.urls')),
+    path('board/', include('board.urls')),
     path('', home),
 ]
+print('에푸쒸커뮤니티 url도 정상')
