@@ -19,27 +19,14 @@ def logout(request):
     return redirect('/')
 
 
-# def login(request):
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-#         print(form.is_valid())
-#         if form.is_valid():
-#             print('--------------------------------------------------------------')
-#             print(form)
-#             return redirect('/')
-#     else:
-#         form = LoginForm
-#     return render(request, 'login.html', {'form': form})
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
-            # request.session['user'] = form.user_id
+            request.session['user'] = form.user_id
             return redirect('/')
     else:
         form = LoginForm()
-
     return render(request, 'login.html', {'form': form})
 
 

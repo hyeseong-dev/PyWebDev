@@ -2,7 +2,11 @@
 venv/
 /__pycache__/
 Users\이혜성\Desktop\pywebdev\DjangoPjt1\fc_community
+/Pybasic
 
 # package File 
 *.sqlite3
 *.pyc
+
+# ignore all .pdf files in the doc/ directory
+/**/*.sqlite3
