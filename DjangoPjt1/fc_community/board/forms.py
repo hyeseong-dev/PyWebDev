@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.hashers import check_password
 
 class BoardForm(forms.Form):
     title = forms.CharField(
